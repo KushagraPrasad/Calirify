@@ -42,14 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!vegBtn || !nonvegBtn) return;
 
         if (type === 'veg') {
-            vegBtn.classList.add('bg-dabba-maroon', 'text-white', 'shadow-lg');
-            vegBtn.classList.remove('text-gray-400', 'bg-white', 'text-dabba-maroon', 'shadow-sm');
-            nonvegBtn.classList.remove('bg-dabba-maroon', 'text-white', 'shadow-lg', 'bg-white', 'text-dabba-maroon', 'shadow-sm');
+            vegBtn.classList.add('bg-calirify-orange', 'text-white', 'shadow-lg');
+            vegBtn.classList.remove('text-gray-400', 'bg-white', 'text-calirify-orange', 'shadow-sm');
+            nonvegBtn.classList.remove('bg-calirify-orange', 'text-white', 'shadow-lg', 'bg-white', 'text-calirify-orange', 'shadow-sm');
             nonvegBtn.classList.add('text-gray-400');
         } else {
-            nonvegBtn.classList.add('bg-dabba-maroon', 'text-white', 'shadow-lg');
-            nonvegBtn.classList.remove('text-gray-400', 'bg-white', 'text-dabba-maroon', 'shadow-sm');
-            vegBtn.classList.remove('bg-dabba-maroon', 'text-white', 'shadow-lg', 'bg-white', 'text-dabba-maroon', 'shadow-sm');
+            nonvegBtn.classList.add('bg-calirify-orange', 'text-white', 'shadow-lg');
+            nonvegBtn.classList.remove('text-gray-400', 'bg-white', 'text-calirify-orange', 'shadow-sm');
+            vegBtn.classList.remove('bg-calirify-orange', 'text-white', 'shadow-lg', 'bg-white', 'text-calirify-orange', 'shadow-sm');
             vegBtn.classList.add('text-gray-400');
         }
 
@@ -148,11 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 dots.forEach((dot, i) => {
                     if (i === activeIndex) {
-                        dot.classList.remove('bg-dabba-maroon/20');
-                        dot.classList.add('bg-dabba-maroon', 'w-4');
+                        dot.classList.remove('bg-calirify-orange/20');
+                        dot.classList.add('bg-calirify-orange', 'w-4');
                     } else {
-                        dot.classList.remove('bg-dabba-maroon', 'w-4');
-                        dot.classList.add('bg-dabba-maroon/20');
+                        dot.classList.remove('bg-calirify-orange', 'w-4');
+                        dot.classList.add('bg-calirify-orange/20');
                     }
                 });
             });
@@ -164,9 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const dayCards = document.querySelectorAll('.menu-day');
     dayCards.forEach(card => {
         if (parseInt(card.getAttribute('data-day')) === today) {
-            card.classList.add('ring-2', 'ring-dabba-maroon', 'bg-dabba-maroon/5', 'scale-105', 'z-10');
+            card.classList.add('ring-2', 'ring-calirify-orange', 'bg-calirify-orange/5', 'scale-105', 'z-10');
             const dayLabel = card.querySelector('p:first-child');
-            if (dayLabel) dayLabel.innerHTML += ' <span class="ml-2 bg-dabba-maroon text-white px-2 py-0.5 rounded-full text-[8px]">TODAY</span>';
+            if (dayLabel) dayLabel.innerHTML += ' <span class="ml-2 bg-calirify-orange text-white px-2 py-0.5 rounded-full text-[8px]">TODAY</span>';
         }
     });
 

@@ -5,9 +5,9 @@
 @tailwind utilities;
 
 :root {
-    --dabba-maroon: #6f1e3b;
-    --dabba-beige: #FFF9E5;
-    --dabba-dark: #1A1A1A;
+    --calirify-orange: #E35F20;
+    --calirify-cream: #FAF4EB;
+    --calirify-dark: #1E1611;
 }
 
 html {
@@ -17,7 +17,7 @@ html {
 body {
     font-family: 'Outfit', sans-serif;
     background-color: #FFFFFF;
-    color: var(--dabba-dark);
+    color: var(--calirify-dark);
 }
 
 .font-serif {
@@ -46,11 +46,11 @@ body {
 }
 
 .btn-primary {
-    @apply bg-[#6f1e3b] text-[#FFF9E5] px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:opacity-90 hover:scale-105;
+    @apply bg-[#E35F20] text-[#FAF4EB] px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:opacity-90 hover:scale-105;
 }
 
 .btn-secondary {
-    @apply border border-[#6f1e3b] text-[#6f1e3b] px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-[#6f1e3b] hover:text-[#FFF9E5];
+    @apply border border-[#E35F20] text-[#E35F20] px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-[#E35F20] hover:text-[#FAF4EB];
 }
 
 /* Animations */
@@ -75,7 +75,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--dabba-maroon);
+    background: var(--calirify-orange);
     border-radius: 10px;
 }
 
@@ -101,7 +101,7 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--dabba-maroon);
+    background-color: var(--calirify-orange);
     transition: width 0.3s ease-out;
 }
 
@@ -111,7 +111,7 @@ body {
 }
 
 .nav-link.active {
-    color: var(--dabba-maroon);
+    color: var(--calirify-orange);
 }
 
 /* Mobile Nav Styles */
@@ -120,13 +120,13 @@ body {
 }
 
 .mobile-nav-link-dropdown.active {
-    background-color: rgba(111, 30, 59, 0.05);
-    color: var(--dabba-maroon);
+    background-color: rgba(227, 95, 32, 0.05);
+    color: var(--calirify-orange);
 }
 
 .mobile-nav-link-dropdown:hover {
-    background-color: rgba(111, 30, 59, 0.03);
-    color: var(--dabba-maroon);
+    background-color: rgba(227, 95, 32, 0.03);
+    color: var(--calirify-orange);
 }
 
 /* Footer Marquee */
