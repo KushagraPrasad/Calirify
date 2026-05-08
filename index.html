@@ -38,7 +38,7 @@
     </script>
 </head>
 
-<body class="bg-white text-calirify-dark selection:bg-calirify-orange selection:text-white">
+<body class="bg-white text-calirify-dark selection:bg-calirify-orange selection:text-white overflow-x-hidden">
 
     <div id="header-placeholder"></div>
 
@@ -144,7 +144,111 @@
         </div>
     </section>
 
-    
+    <!-- Interactive Calorie & Macro Target Matcher Section -->
+    <section id="calorie-clarity" class="py-24 bg-calirify-cream/15 scroll-mt-20 border-b border-black/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                
+                <!-- Left Column: Header and Slider Control -->
+                <div class="lg:col-span-5 text-left reveal">
+                    <p class="text-calirify-orange font-bold uppercase tracking-[0.3em] text-[10px] mb-4">Precision Goal Planner</p>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-calirify-dark leading-tight mb-6">Clarify Your <br><span class="text-calirify-orange italic">Macro Matches</span></h2>
+                    <p class="text-gray-500 mb-8 leading-relaxed font-medium">Use our interactive target engine to adjust your daily goals. Watch your macro-nutrient distribution clarify in real-time, matching you with the perfect plan.</p>
+                    
+                    <!-- Goal Buttons -->
+                    <div class="mb-8">
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3.5">Choose Your Focus Goal</label>
+                        <div class="grid grid-cols-3 gap-3 bg-white p-1.5 rounded-2xl border border-calirify-orange/10 shadow-sm">
+                            <button id="goal-weightloss" class="goal-btn py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-300 bg-calirify-orange text-white shadow-md shadow-calirify-orange/15" onclick="selectGoal('weightloss')">Weight Loss</button>
+                            <button id="goal-balanced" class="goal-btn py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-300 text-gray-500 hover:text-calirify-dark" onclick="selectGoal('balanced')">Stay Fit</button>
+                            <button id="goal-muscle" class="goal-btn py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all duration-300 text-gray-500 hover:text-calirify-dark" onclick="selectGoal('muscle')">Gain Muscle</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Calorie Range Slider -->
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Daily Calorie Target</label>
+                            <span class="text-2xl font-serif font-bold text-calirify-orange" id="slider-val-label">1,800 kcal</span>
+                        </div>
+                        <div class="relative bg-white p-6 rounded-2xl border border-calirify-orange/10 shadow-sm">
+                            <input type="range" id="calorie-slider" min="1200" max="3000" step="50" value="1800" style="touch-action: pan-y;" class="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-calirify-orange" oninput="updateCalculations()">
+                            <div class="flex justify-between text-[9px] font-bold text-gray-400 mt-3.5 tracking-wider uppercase">
+                                <span>1200 kcal</span>
+                                <span>2100 kcal</span>
+                                <span>3000 kcal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column: Interactive Output Display -->
+                <div class="lg:col-span-7 reveal" style="transition-delay: 150ms;">
+                    <div class="bg-white rounded-[3rem] p-8 lg:p-12 border border-calirify-orange/5 shadow-2xl relative overflow-hidden flex flex-col md:flex-row gap-8 lg:gap-12 items-center">
+                        
+                        <!-- Macro Bars Representation -->
+                        <div class="w-full md:w-3/5 space-y-6 text-left">
+                            <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Macro Distribution</h3>
+                            
+                            <!-- Protein -->
+                            <div>
+                                <div class="flex justify-between items-center text-xs font-bold mb-2">
+                                    <span class="text-calirify-dark flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-calirify-orange"></span> Protein
+                                    </span>
+                                    <span class="text-gray-500" id="protein-g-label">158g</span>
+                                </div>
+                                <div class="w-full h-3.5 bg-gray-50 rounded-full overflow-hidden border border-gray-100/30">
+                                    <div id="protein-bar" class="h-full bg-calirify-orange rounded-full transition-all duration-500" style="width: 35%;"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Carbs -->
+                            <div>
+                                <div class="flex justify-between items-center text-xs font-bold mb-2">
+                                    <span class="text-calirify-dark flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span> Carbohydrates
+                                    </span>
+                                    <span class="text-gray-500" id="carbs-g-label">113g</span>
+                                </div>
+                                <div class="w-full h-3.5 bg-gray-50 rounded-full overflow-hidden border border-gray-100/30">
+                                    <div id="carbs-bar" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 25%;"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Fats -->
+                            <div>
+                                <div class="flex justify-between items-center text-xs font-bold mb-2">
+                                    <span class="text-calirify-dark flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Healthy Fats
+                                    </span>
+                                    <span class="text-gray-500" id="fats-g-label">80g</span>
+                                </div>
+                                <div class="w-full h-3.5 bg-gray-50 rounded-full overflow-hidden border border-gray-100/30">
+                                    <div id="fats-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 40%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recommended Plan Card Display -->
+                        <div class="w-full md:w-2/5 p-6 rounded-[2rem] bg-calirify-cream/40 border border-calirify-orange/10 flex flex-col justify-between min-h-[280px]">
+                            <div class="text-left">
+                                <p class="text-[8px] font-bold text-calirify-orange uppercase tracking-[0.2em] mb-1.5">Target Match</p>
+                                <h4 class="text-2xl font-serif font-bold text-calirify-dark mb-3" id="match-plan-title">Keto Diet Plan</h4>
+                                <p class="text-xs text-gray-500 leading-relaxed" id="match-plan-desc">Low-carb, high-fat design to jumpstart ketosis, perfect for rapid energy shift and toning.</p>
+                            </div>
+                            <div class="mt-6">
+                                <a href="pages/order.html" class="block w-full py-3.5 bg-calirify-orange text-white font-bold text-[10px] uppercase tracking-widest text-center rounded-xl hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-calirify-orange/15 transition-all duration-300">Choose This Plan</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
     <section id="explore-plans" class="py-24 bg-white scroll-mt-20">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-left mb-16 reveal">
@@ -332,13 +436,13 @@
     <section id="why-calirify" class="py-24 bg-calirify-cream/30 border-y border-black/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-left mb-16 reveal">
-                <p class="text-calirify-orange font-bold uppercase tracking-[0.3em] text-[11px] mb-4">Our Promise</p>
-                <h2 class="text-4xl md:text-5xl font-serif font-bold">More than a meal plan service.</h2>
+                <p class="text-calirify-orange font-bold uppercase tracking-[0.3em] text-[11px] mb-4">Precision Wellness</p>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold">More than a meal prep service.</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                
+                <!-- Main Feature Card: Precision Macro Kitchen -->
                 <div
                     class="md:col-span-2 group relative overflow-hidden rounded-[2.5rem] shadow-md transition-all duration-500 hover:shadow-2xl hover:shadow-calirify-orange/20 hover:-translate-y-1 reveal min-h-[340px] flex items-end isolate transform-gpu">
                     <div class="absolute inset-0 z-0 overflow-hidden rounded-[2.5rem]">
@@ -362,15 +466,14 @@
                         </div>
                         <div>
                             <h3 class="text-2xl md:text-3xl font-serif font-bold text-white mb-4 leading-tight">
-                                Modern Kitchens.</h3>
+                                Precision Macro Kitchen.</h3>
                             <p class="text-base text-white/80 leading-relaxed max-w-lg">Every meal is prepared in our
-                                modern, FSSAI-approved facilities. We combine strict hygiene with
-                                Zero Preservatives for the safest meal subscription experience in India.</p>
+                                modern, FSSAI-approved facilities. We strictly weigh every raw ingredient down to the gram, ensuring zero guesswork for your daily health tracking.</p>
                         </div>
                     </div>
                 </div>
 
-                
+                <!-- Card: Raw Ingredient Clarity -->
                 <div
                     class="group relative overflow-hidden bg-calirify-orange rounded-[2.5rem] p-10 shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-calirify-orange/20 hover:-translate-y-1 reveal">
                     <div
@@ -383,13 +486,11 @@
                                 d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                         </svg>
                     </div>
-                    <h4 class="text-xl font-serif font-bold text-white mb-4 relative z-10">Freshly Sourced</h4>
-                    <p class="text-sm text-white/80 leading-relaxed relative z-10">Pesticide-free, nutrient-dense greens
-                        and premium
-                        ingredients sourced fresh from local markets every single morning.</p>
+                    <h4 class="text-xl font-serif font-bold text-white mb-4 relative z-10">Ingredient Clarity</h4>
+                    <p class="text-sm text-white/80 leading-relaxed relative z-10">Nutrient-dense greens and premium proteins sourced fresh. Every single ingredient's macro profile is audited before preparation.</p>
                 </div>
 
-                
+                <!-- Daily Delivery -->
                 <div
                     class="bg-white rounded-[2.5rem] p-10 border border-calirify-orange/10 shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-1 hover:border-calirify-orange/30 reveal">
                     <div
@@ -404,11 +505,10 @@
                         </svg>
                     </div>
                     <h4 class="text-xl font-serif font-bold text-calirify-dark mb-4">On-Time, Every Time</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">Reliable, fast delivery directly to your
-                        doorstep, ensuring your hot, delicious meal arrives exactly when you need it.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Reliable, fast delivery directly to your doorstep, ensuring your fresh, calorie-controlled meal arrives exactly when you need it.</p>
                 </div>
 
-                
+                <!-- Flexibility -->
                 <div
                     class="bg-white rounded-[2.5rem] p-10 border border-calirify-orange/10 shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-1 hover:border-calirify-orange/30 reveal">
                     <div
@@ -423,11 +523,10 @@
                         </svg>
                     </div>
                     <h4 class="text-xl font-serif font-bold text-calirify-dark mb-4">Total Control</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">Pause, cancel, or reschedule your meals with zero
-                        hassle via our seamless, intuitive mobile-first dashboard.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed">Pause, cancel, or reschedule your meals with zero hassle via our seamless, intuitive mobile-first dashboard.</p>
                 </div>
 
-                
+                <!-- Variety -->
                 <div
                     class="bg-white rounded-[2.5rem] p-10 border border-calirify-orange/10 shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-1 hover:border-calirify-orange/30 reveal">
                     <div
@@ -438,9 +537,8 @@
                             </path>
                         </svg>
                     </div>
-                    <h4 class="text-xl font-serif font-bold text-calirify-dark mb-4">Daily Variety</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">No more boring lunches. Enjoy a rotating menu of
-                        tasty meal plan flavors that change every single day to keep your workday exciting.</p>
+                    <h4 class="text-xl font-serif font-bold text-calirify-dark mb-4">Macro Variety</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed">No more boring lunches. Enjoy a rotating premium menu curated by expert culinary nutritionists to hit your daily macro ratios while keeping your palate excited.</p>
                 </div>
 
             </div>
@@ -619,186 +717,230 @@
             
             <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 lg:gap-6 pt-4 pb-8 -mx-6 px-6 lg:mx-0 lg:px-0 hide-scrollbar cursor-grab active:cursor-grabbing"
                 id="menu-container">
-                
+                <!-- Monday -->
                 <div class="menu-day shrink-0 w-[85vw] sm:w-[45vw] lg:w-[calc(33.333%-1rem)] snap-center p-6 rounded-3xl bg-calirify-cream/10 border border-calirify-orange/5 transition-all duration-500 hover:bg-white hover:shadow-xl hover:border-calirify-orange/20 reveal"
                     data-day="1">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Monday</p>
                     <div class="space-y-6">
                         <div>
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Lunch</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Lunch</p>
                             <img src="assets/images/calirify_images/calirify_scraped_14.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_14.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_4.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
-                                data-veg="Bhindi Do Piaza & Dal" data-nonveg="Murg Do Piaza & Dal">Bhindi Do Piaza & Dal
-                            </p>
+                                data-veg="Bhindi Do Piaza & Dal" data-nonveg="Murg Do Piaza & Dal">Bhindi Do Piaza & Dal</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="420 kcal" data-nonveg="540 kcal">420 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="14g Protein" data-nonveg="38g Protein">14g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="58g Carbs" data-nonveg="44g Carbs">58g Carbs</span>
+                            </div>
                         </div>
                         <div class="pt-6 border-t border-calirify-orange/5">
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Dinner</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Dinner</p>
                             <img src="assets/images/calirify_images/calirify_scraped_16.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_16.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_6.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
                                 data-veg="Pav Bhaji Special" data-nonveg="Keema Pav Classic">Pav Bhaji Special</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="490 kcal" data-nonveg="580 kcal">490 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="12g Protein" data-nonveg="35g Protein">12g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="68g Carbs" data-nonveg="52g Carbs">68g Carbs</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Tuesday -->
                 <div class="menu-day shrink-0 w-[85vw] sm:w-[45vw] lg:w-[calc(33.333%-1rem)] snap-center p-6 rounded-3xl bg-calirify-cream/10 border border-calirify-orange/5 transition-all duration-500 hover:bg-white hover:shadow-xl hover:border-calirify-orange/20 reveal"
                     data-day="2">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Tuesday</p>
                     <div class="space-y-6">
                         <div>
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Lunch</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Lunch</p>
                             <img src="assets/images/calirify_images/calirify_scraped_19.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_19.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_20.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
-                                data-veg="Mughlai Gobhi & Kabuli" data-nonveg="Chicken Mughlai & Kabuli">Mughlai Gobhi &
-                                Kabuli</p>
+                                data-veg="Mughlai Gobhi & Kabuli" data-nonveg="Chicken Mughlai & Kabuli">Mughlai Gobhi & Kabuli</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="410 kcal" data-nonveg="560 kcal">410 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="11g Protein" data-nonveg="42g Protein">11g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="56g Carbs" data-nonveg="38g Carbs">56g Carbs</span>
+                            </div>
                         </div>
                         <div class="pt-6 border-t border-calirify-orange/5">
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Dinner</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Dinner</p>
                             <img src="assets/images/calirify_images/calirify_scraped_21.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_21.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_22.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
-                                data-veg="Subz Khurchan & Roti" data-nonveg="Murg Khurchan & Roti">Subz Khurchan & Roti
-                            </p>
+                                data-veg="Subz Khurchan & Roti" data-nonveg="Murg Khurchan & Roti">Subz Khurchan & Roti</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="390 kcal" data-nonveg="510 kcal">390 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="10g Protein" data-nonveg="36g Protein">10g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="52g Carbs" data-nonveg="34g Carbs">52g Carbs</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Wednesday -->
                 <div class="menu-day shrink-0 w-[85vw] sm:w-[45vw] lg:w-[calc(33.333%-1rem)] snap-center p-6 rounded-3xl bg-calirify-cream/10 border border-calirify-orange/5 transition-all duration-500 hover:bg-white hover:shadow-xl hover:border-calirify-orange/20 reveal"
                     data-day="3">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Wednesday</p>
                     <div class="space-y-6">
                         <div>
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Lunch</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Lunch</p>
                             <img src="assets/images/calirify_images/calirify_scraped_26.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_26.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_27.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
-                                data-veg="Chilli Mushroom Feast" data-nonveg="Chilli Chicken Feast">Chilli Mushroom
-                                Feast</p>
+                                data-veg="Chilli Mushroom Feast" data-nonveg="Chilli Chicken Feast">Chilli Mushroom Feast</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="380 kcal" data-nonveg="520 kcal">380 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="12g Protein" data-nonveg="39g Protein">12g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="48g Carbs" data-nonveg="36g Carbs">48g Carbs</span>
+                            </div>
                         </div>
                         <div class="pt-6 border-t border-calirify-orange/5">
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Dinner</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Dinner</p>
                             <img src="assets/images/calirify_images/calirify_scraped_28.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_28.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_29.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
-                                data-veg="Baigan Bharta Smoked" data-nonveg="Murgi Bharta Smoked">Baigan Bharta Smoked
-                            </p>
+                                data-veg="Baigan Bharta Smoked" data-nonveg="Murgi Bharta Smoked">Baigan Bharta Smoked</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="340 kcal" data-nonveg="480 kcal">340 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="8g Protein" data-nonveg="34g Protein">8g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="42g Carbs" data-nonveg="30g Carbs">42g Carbs</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Thursday -->
                 <div class="menu-day shrink-0 w-[85vw] sm:w-[45vw] lg:w-[calc(33.333%-1rem)] snap-center p-6 rounded-3xl bg-calirify-cream/10 border border-calirify-orange/5 transition-all duration-500 hover:bg-white hover:shadow-xl hover:border-calirify-orange/20 reveal"
                     data-day="4">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Thursday</p>
                     <div class="space-y-6">
                         <div>
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Lunch</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Lunch</p>
                             <img src="assets/images/calirify_images/calirify_scraped_10.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_10.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_11.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
                                 data-veg="Paneer Mutter & Dal" data-nonveg="Murg Mutter & Dal">Paneer Mutter & Dal</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="460 kcal" data-nonveg="520 kcal">460 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="18g Protein" data-nonveg="38g Protein">18g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="44g Carbs" data-nonveg="34g Carbs">44g Carbs</span>
+                            </div>
                         </div>
                         <div class="pt-6 border-t border-calirify-orange/5">
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Dinner</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Dinner</p>
                             <img src="assets/images/calirify_images/calirify_scraped_7.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_7.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_8.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
-                                data-veg="Tex Mex Sweet Potato" data-nonveg="Tex Mex Chicken Bowl">Tex Mex Sweet Potato
-                            </p>
+                                data-veg="Tex Mex Sweet Potato" data-nonveg="Tex Mex Chicken Bowl">Tex Mex Sweet Potato</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="420 kcal" data-nonveg="510 kcal">420 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="10g Protein" data-nonveg="36g Protein">10g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="65g Carbs" data-nonveg="48g Carbs">65g Carbs</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Friday -->
                 <div class="menu-day shrink-0 w-[85vw] sm:w-[45vw] lg:w-[calc(33.333%-1rem)] snap-center p-6 rounded-3xl bg-calirify-cream/10 border border-calirify-orange/5 transition-all duration-500 hover:bg-white hover:shadow-xl hover:border-calirify-orange/20 reveal"
                     data-day="5">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Friday</p>
                     <div class="space-y-6">
                         <div>
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Lunch</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Lunch</p>
                             <img src="assets/images/calirify_images/calirify_scraped_15.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_15.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_9.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
-                                data-veg="Thai Green Curry Veg" data-nonveg="Thai Green Curry Chicken">Thai Green Curry
-                                Veg</p>
+                                data-veg="Thai Green Curry Veg" data-nonveg="Thai Green Curry Chicken">Thai Green Curry Veg</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="440 kcal" data-nonveg="550 kcal">440 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="12g Protein" data-nonveg="34g Protein">12g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="54g Carbs" data-nonveg="42g Carbs">54g Carbs</span>
+                            </div>
                         </div>
                         <div class="pt-6 border-t border-calirify-orange/5">
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Dinner</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Dinner</p>
                             <img src="assets/images/calirify_images/calirify_scraped_36.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_36.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_37.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
-                                data-veg="Methi Paneer Classic" data-nonveg="Methi Chicken Classic">Methi Paneer Classic
-                            </p>
+                                data-veg="Methi Paneer Classic" data-nonveg="Methi Chicken Classic">Methi Paneer Classic</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="480 kcal" data-nonveg="510 kcal">480 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="19g Protein" data-nonveg="38g Protein">19g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="40g Carbs" data-nonveg="32g Carbs">40g Carbs</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
+                <!-- Saturday -->
                 <div class="menu-day shrink-0 w-[85vw] sm:w-[45vw] lg:w-[calc(33.333%-1rem)] snap-center p-6 rounded-3xl bg-calirify-cream/10 border border-calirify-orange/5 transition-all duration-500 hover:bg-white hover:shadow-xl hover:border-calirify-orange/20 reveal"
                     data-day="6">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-6">Saturday</p>
                     <div class="space-y-6">
                         <div>
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Lunch</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Lunch</p>
                             <img src="assets/images/calirify_images/calirify_scraped_17.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_17.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_18.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
-                                data-veg="Veg Biryani & Salan" data-nonveg="Chicken Biryani & Salan">Veg Biryani & Salan
-                            </p>
+                                data-veg="Veg Biryani & Salan" data-nonveg="Chicken Biryani & Salan">Veg Biryani & Salan</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="520 kcal" data-nonveg="640 kcal">520 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="14g Protein" data-nonveg="41g Protein">14g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="82g Carbs" data-nonveg="74g Carbs">82g Carbs</span>
+                            </div>
                         </div>
                         <div class="pt-6 border-t border-calirify-orange/5">
-                            <p
-                                class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">
-                                Dinner</p>
+                            <p class="text-[9px] font-bold text-calirify-orange uppercase tracking-widest mb-2 opacity-60">Dinner</p>
                             <img src="assets/images/calirify_images/calirify_scraped_14.jpg"
                                 class="meal-image w-full h-32 object-cover rounded-xl mb-3 transition-opacity duration-300"
                                 data-veg="assets/images/calirify_images/calirify_scraped_14.jpg"
                                 data-nonveg="assets/images/calirify_images/calirify_scraped_4.jpg" alt="Dish">
                             <p class="font-serif font-bold text-sm text-gray-800 meal-text leading-snug"
                                 data-veg="Paneer Bhurji Mix" data-nonveg="Egg Bhurji Mix">Paneer Bhurji Mix</p>
+                            <!-- Live Nutrition Stats -->
+                            <div class="meal-macros mt-3.5 flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 rounded-md bg-calirify-orange/5 text-calirify-orange text-[9px] font-bold transition-all duration-300" data-veg="450 kcal" data-nonveg="430 kcal">450 kcal</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="19g Protein" data-nonveg="28g Protein">19g Protein</span>
+                                <span class="px-2 py-0.5 rounded-md bg-gray-50 text-gray-500 text-[9px] font-bold transition-all duration-300" data-veg="36g Carbs" data-nonveg="24g Carbs">36g Carbs</span>
+                            </div>
                         </div>
                     </div>
                 </div>

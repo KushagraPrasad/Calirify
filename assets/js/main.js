@@ -72,6 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.classList.remove('switching');
             }, 400);
         });
+
+        const macroSpans = document.querySelectorAll('.meal-macros span');
+        macroSpans.forEach(span => {
+            span.classList.add('switching');
+            setTimeout(() => {
+                if (span.hasAttribute(`data-${type}`)) {
+                    span.textContent = span.getAttribute(`data-${type}`);
+                }
+                span.classList.remove('switching');
+            }, 400);
+        });
     }
 
     if (vegBtn) vegBtn.addEventListener('click', () => updateMenu('veg'));
@@ -335,4 +346,100 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    let currentGoal = 'weightloss';
+
+    window.selectGoal = function(goal) {
+        currentGoal = goal;
+        
+        document.querySelectorAll('.goal-btn').forEach(btn => {
+            btn.classList.remove('bg-calirify-orange', 'text-white', 'shadow-md', 'shadow-calirify-orange/15');
+            btn.classList.add('text-gray-500');
+        });
+        
+        const activeBtn = document.getElementById(`goal-${goal}`);
+        if (activeBtn) {
+            activeBtn.classList.add('bg-calirify-orange', 'text-white', 'shadow-md', 'shadow-calirify-orange/15');
+            activeBtn.classList.remove('text-gray-500');
+        }
+        
+        const slider = document.getElementById('calorie-slider');
+        if (slider) {
+            if (goal === 'weightloss') slider.value = 1600;
+            else if (goal === 'balanced') slider.value = 2000;
+            else if (goal === 'muscle') slider.value = 2400;
+        }
+        
+        updateCalculations();
+    };
+
+    window.updateCalculations = function() {
+        const slider = document.getElementById('calorie-slider');
+        const sliderValLabel = document.getElementById('slider-val-label');
+        if (!slider) return;
+        
+        const cal = parseInt(slider.value);
+        if (sliderValLabel) {
+            sliderValLabel.textContent = cal.toLocaleString() + ' kcal';
+        }
+        
+        let pPct, cPct, fPct;
+        let planTitle = "";
+        let planDesc = "";
+        
+        if (currentGoal === 'weightloss') {
+            pPct = 35;
+            cPct = 25;
+            fPct = 40;
+            planTitle = "Keto Diet Plan";
+            planDesc = "Low-carb, high-fat design to jumpstart ketosis, perfect for rapid energy shift and toning.";
+        } else if (currentGoal === 'balanced') {
+            pPct = 25;
+            cPct = 45;
+            fPct = 30;
+            planTitle = "Daily Healthy Plan";
+            planDesc = "Balanced macros with nutrient-rich proteins and smart carbs to power active maintenance.";
+        } else if (currentGoal === 'muscle') {
+            pPct = 40;
+            cPct = 40;
+            fPct = 20;
+            planTitle = "14D Transformation";
+            planDesc = "High-protein, moderate carb configuration built specifically to build mass and repair muscle tissue.";
+        }
+        
+        const pG = Math.round((cal * (pPct/100)) / 4);
+        const cG = Math.round((cal * (cPct/100)) / 4);
+        const fG = Math.round((cal * (fPct/100)) / 9);
+        
+        const pGLabel = document.getElementById('protein-g-label');
+        const cGLabel = document.getElementById('carbs-g-label');
+        const fGLabel = document.getElementById('fats-g-label');
+        
+        if (pGLabel) pGLabel.textContent = pG + 'g';
+        if (cGLabel) cGLabel.textContent = cG + 'g';
+        if (fGLabel) fGLabel.textContent = fG + 'g';
+        
+        const pBar = document.getElementById('protein-bar');
+        const cBar = document.getElementById('carbs-bar');
+        const fBar = document.getElementById('fats-bar');
+        
+        const maxP = 300;
+        const maxC = 338;
+        const maxF = 133;
+        
+        if (pBar) pBar.style.width = Math.max(8, Math.min(100, (pG / maxP) * 100)) + '%';
+        if (cBar) cBar.style.width = Math.max(8, Math.min(100, (cG / maxC) * 100)) + '%';
+        if (fBar) fBar.style.width = Math.max(8, Math.min(100, (fG / maxF) * 100)) + '%';
+        
+        const planTitleEl = document.getElementById('match-plan-title');
+        const planDescEl = document.getElementById('match-plan-desc');
+        
+        if (planTitleEl) planTitleEl.textContent = planTitle;
+        if (planDescEl) planDescEl.textContent = planDesc;
+    };
+
+    const slider = document.getElementById('calorie-slider');
+    if (slider) {
+        updateCalculations();
+    }
 });
